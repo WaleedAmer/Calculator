@@ -291,6 +291,9 @@
                                 <constraints>
                                     <constraint firstItem="hSk-Vi-HzM" firstAttribute="width" secondItem="14C-OS-tWq" secondAttribute="width" id="3BO-mK-AcV"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.9784112573" green="0.39151725170000001" blue="0.56594455239999997" alpha="1" colorSpace="deviceRGB"/>

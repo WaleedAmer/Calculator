@@ -38,10 +38,11 @@ class ViewController: UIViewController {
         gradientLayer = makeGradientLayer((250, 109, 105), rgb2: (241, 41, 124))
         self.view.layer.addSublayer(gradientLayer)
         
-        // Hide the calculator buttons
-        RowsStackView.hidden = true
+        AnswerView.hidden = true
+        AnswerView.alpha = 0
         RowsStackView.alpha = 0
         
+        // Set up UIButton highlights
         for row in RowsStackView.arrangedSubviews {
             if let buttons = row as? UIStackView {
                 for view in buttons.arrangedSubviews {
@@ -69,16 +70,17 @@ class ViewController: UIViewController {
         
         calculator = Calculator()
         calculator.viewController = self
-
     }
     
     override func viewDidAppear(animated: Bool) {
-        UIView.animateWithDuration(0.5, delay: 0, options: [.CurveEaseInOut], animations: { () -> Void in
-            self.RowsStackView.hidden = false
+        UIView.animateWithDuration(0.5, delay: 0.4, options: [.CurveEaseInOut], animations: { () -> Void in
+            self.AnswerView.hidden = false
+            
+            self.RowsStackView.alpha = 1
             }, completion: nil)
         
-        UIView.animateWithDuration(0.5, delay: 0.4, options: [.CurveEaseOut], animations: { () -> Void in
-            self.RowsStackView.alpha = 1
+        UIView.animateWithDuration(0.5, delay: 0.8, options: [.CurveEaseOut], animations: { () -> Void in
+            self.AnswerView.alpha = 1
             }, completion: nil)
     }
     
