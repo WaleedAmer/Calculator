@@ -7,6 +7,19 @@
 //
 
 import UIKit
+import pop
+
+public extension UIImage {
+    convenience init(color: UIColor, size: CGSize = CGSizeMake(1, 1)) {
+        let rect = CGRectMake(0, 0, size.width, size.height)
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
+        color.setFill()
+        UIRectFill(rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        self.init(CGImage: image.CGImage!)
+    }  
+}
 
 class ViewController: UIViewController {
 
@@ -18,10 +31,30 @@ class ViewController: UIViewController {
     @IBOutlet weak var RowsStackView: UIStackView!
     @IBOutlet weak var answerLabel: UILabel!
     
+    var pendingOperator: UIButton? = nil
+    
     override func viewWillAppear(animated: Bool) {
         // Make the background pretty
         gradientLayer = makeGradientLayer((250, 109, 105), rgb2: (241, 41, 124))
         self.view.layer.addSublayer(gradientLayer)
+        
+        // Hide the calculator buttons
+        RowsStackView.hidden = true
+        RowsStackView.alpha = 0
+        
+        for row in RowsStackView.arrangedSubviews {
+            if let buttons = row as? UIStackView {
+                for view in buttons.arrangedSubviews {
+                    if let button = view as? UIButton {
+                        let whiteImage = UIImage(color: UIColor.whiteColor(), size: button.frame.size)
+                        button.setBackgroundImage(whiteImage, forState: UIControlState.Highlighted)
+                        button.setBackgroundImage(whiteImage, forState: UIControlState.Selected)
+                        button.layer.cornerRadius = 20
+                        button.clipsToBounds = true
+                    }
+                }
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -35,6 +68,18 @@ class ViewController: UIViewController {
         AnswerView.layer.shadowOpacity = 0.25
         
         calculator = Calculator()
+        calculator.viewController = self
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        UIView.animateWithDuration(0.5, delay: 0, options: [.CurveEaseInOut], animations: { () -> Void in
+            self.RowsStackView.hidden = false
+            }, completion: nil)
+        
+        UIView.animateWithDuration(0.5, delay: 0.4, options: [.CurveEaseOut], animations: { () -> Void in
+            self.RowsStackView.alpha = 1
+            }, completion: nil)
     }
     
     // MARK:- Handle Input Types
@@ -46,7 +91,7 @@ class ViewController: UIViewController {
                     let result = calculator.handleInput(InputType: .Digit, input: digit)
                     answerLabel.text = result.output
                     if (result.error) {
-                        shake(AnswerView, duration: 0.05, intensity: 5, count: 2)
+                        shake(AnswerView, duration: 0.05, intensity: 3, count: 1)
                     }
                 }
             }
@@ -57,11 +102,16 @@ class ViewController: UIViewController {
         // Unwrap the button's label to get the operator
         if let label = sender.titleLabel {
             if let text = label.text {
-                let op = Character.init(text)
-                let result = calculator.handleInput(InputType: .Operator, input: op)
+                let Operator = Character.init(text)
+                
+                let result = calculator.handleInput(InputType: .Operator, input: Operator)
                 answerLabel.text = result.output
                 if (result.error) {
-                    shake(AnswerView, duration: 0.05, intensity: 5, count: 2)
+                    shake(AnswerView, duration: 0.05, intensity: 3, count: 1)
+                }
+                else {
+                    pendingOperator = sender
+                    scaleUp(sender)
                 }
             }
         }
@@ -71,10 +121,14 @@ class ViewController: UIViewController {
         let result = calculator.handleInput(InputType: .Equal)
         answerLabel.text = result.output
         if (result.error) {
-            shake(AnswerView, duration: 0.05, intensity: 5, count: 2)
+            shake(AnswerView, duration: 0.05, intensity: 3, count: 1)
         }
         else {
-            shakeVertical(answerLabel, duration: 0.1, intensity: 3, count: 1)
+            if let button = pendingOperator {
+                scaleDown(button)
+                pendingOperator = nil
+            }
+            //shakeVertical(AnswerView, duration: 0.1, intensity: 3, count: 1)
         }
     }
     
@@ -82,15 +136,20 @@ class ViewController: UIViewController {
         let result = calculator.handleInput(InputType: .Point)
         answerLabel.text = result.output
         if (result.error) {
-            shake(AnswerView, duration: 0.05, intensity: 5, count: 2)
+            shake(AnswerView, duration: 0.05, intensity: 3, count: 1)
         }
     }
     
     @IBAction func clearWasTapped(sender: AnyObject) {
         let result = calculator.handleInput(InputType: .Clear)
+        //let result = (output: "yo", error: false)
         answerLabel.text = result.output
         if (result.error) {
-            shake(AnswerView, duration: 0.05, intensity: 5, count: 2)
+            shake(AnswerView, duration: 0.05, intensity: 3, count: 1)
+        }
+        if let button = pendingOperator {
+            scaleDown(button)
+            pendingOperator = nil
         }
     }
 
@@ -98,7 +157,7 @@ class ViewController: UIViewController {
         let result = calculator.handleInput(InputType: .Answer)
         answerLabel.text = result.output
         if (result.error) {
-            shake(AnswerView, duration: 0.05, intensity: 5, count: 2)
+            shake(AnswerView, duration: 0.05, intensity: 3, count: 1)
         }
     }
     
@@ -106,7 +165,7 @@ class ViewController: UIViewController {
         let result = calculator.handleInput(InputType: .Delete)
         answerLabel.text = result.output
         if (result.error == true) {
-            shake(AnswerView, duration: 0.05, intensity: 5, count: 2)
+            shake(AnswerView, duration: 0.05, intensity: 3, count: 1)
         }
     }
     
@@ -135,52 +194,73 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-}
-
-// Shake a view vertically
-func shakeVertical(view: UIView, duration: NSTimeInterval, intensity: CGFloat, count: Int) {
-    UIView.animateWithDuration(
-        duration,
-        animations: {
-            view.frame.origin.y = intensity
-        },
-        completion: { finish in
-            UIView.animateWithDuration(
-                duration,
-                animations: {
-                    view.frame.origin.y = 0
+    
+    // MARK:- Animations
+    func scaleUp(sender: UIView) {
+        let scaleUpAnimation = POPSpringAnimation(propertyNamed: kPOPViewScaleXY)
+        scaleUpAnimation.velocity = NSValue(CGPoint: CGPointMake(12, 12))
+        scaleUpAnimation.springBounciness = 12
+        scaleUpAnimation.springSpeed = 20
+        scaleUpAnimation.toValue = NSValue(CGPoint: CGPointMake(1.5, 1.5))
+        sender.pop_addAnimation(scaleUpAnimation, forKey: "scale")
+    }
+    
+    func scaleDown(sender: UIView) {
+        let scaleDownAnimation = POPSpringAnimation(propertyNamed: kPOPViewScaleXY)
+        scaleDownAnimation.velocity = NSValue(CGPoint: CGPointMake(12, 12))
+        scaleDownAnimation.springBounciness = 12
+        scaleDownAnimation.springSpeed = 20
+        scaleDownAnimation.toValue = NSValue(CGPoint: CGPointMake(1, 1))
+        sender.pop_addAnimation(scaleDownAnimation, forKey: "scale")
+    }
+    
+    // Shake a view vertically
+    func shakeVertical(view: UIView, duration: NSTimeInterval, intensity: CGFloat, count: Int) {
+        UIView.animateWithDuration(
+            duration,
+            animations: {
+                view.frame.origin.y = intensity
+            },
+            completion: { finish in
+                UIView.animateWithDuration(
+                    duration,
+                    animations: {
+                        view.frame.origin.y = 0
                 })
-    })
+        })
+    }
+    
+    // Shake a view side to side
+    func shake(view: UIView, duration: NSTimeInterval, intensity: CGFloat, count: Int) {
+        UIView.animateWithDuration(
+            duration,
+            animations: {
+                view.frame.origin.x = -intensity
+            },
+            completion: { finish in
+                UIView.animateWithDuration(
+                    duration,
+                    animations: {
+                        view.frame.origin.x = intensity
+                    },
+                    completion: { finish in
+                        if (count == 0) {
+                            UIView.animateWithDuration(
+                                duration,
+                                animations: {
+                                    view.frame.origin.x = 0
+                                }
+                            )
+                        } else {
+                            self.shake(view, duration: duration, intensity: intensity, count: count-1)
+                        }
+                    }
+                )
+            }
+        )
+    }
 }
 
-// Shake a view side to side
-func shake(view: UIView, duration: NSTimeInterval, intensity: CGFloat, count: Int) {
-    UIView.animateWithDuration(
-        duration,
-        animations: {
-            view.frame.origin.x = -intensity
-        },
-        completion: { finish in
-            UIView.animateWithDuration(
-                duration,
-                animations: {
-                    view.frame.origin.x = intensity
-                },
-                completion: { finish in
-                    if (count == 0) {
-                        UIView.animateWithDuration(
-                            duration,
-                            animations: {
-                                view.frame.origin.x = 0
-                            }
-                        )
-                    } else {
-                        shake(view, duration: duration, intensity: intensity, count: count-1)
-                    }
-                }
-            )
-        }
-    )
-}
+
 
 

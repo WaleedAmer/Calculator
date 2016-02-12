@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum InputType {
     case Digit
@@ -26,12 +27,28 @@ enum CalculatorState {
 }
 
 class Calculator {
+    var viewController: ViewController? = nil
     var state: CalculatorState = .Start
-    var string: String = "0"
+    var string: String = "0" {
+        didSet {
+            var shook = false
+            while string.characters.count > 10 {
+                if !shook {
+                    if let vc = viewController {
+                        vc.shake(vc.AnswerView, duration: 0.05, intensity: 3, count: 1)
+                        shook = true
+                    }
+                }
+                string.removeAtIndex(string.endIndex.predecessor())
+            }
+        }
+    }
     
     var pendingValue: Double? = nil
     var pendingOperator: Character? = nil
     var lastAnswer: Double? = nil
+    
+    var lastCalculation: (Operator: Character, value: Double)? = nil
     
     func handleInput(InputType type: InputType, input: Character? = nil) -> (output: String, error: Bool) {
         // Get initial state so that we can tell if the state changed at the end (For debug purposes)
@@ -48,17 +65,26 @@ class Calculator {
                 switch (state) {
                     
                     case .Start:
+                        
                         if let digit = input {
-                            if pendingOperator == nil {
-                                if digit != "0" {
-                                    string = String(digit)
-                                    state = .Partial_Int
-                                }
+                            if string != "0" {
+                                // Answer is displayed
+                                string = String(digit)
+                                state = .Partial_Int
+                                break
                             }
                             else {
-                                if digit != "0" {
-                                    string = String(digit)
-                                    state = .Partial_Int
+                                if pendingOperator == nil {
+                                    if digit != "0" {
+                                        string = String(digit)
+                                        state = .Partial_Int
+                                    }
+                                }
+                                else {
+                                    if digit != "0" {
+                                        string = String(digit)
+                                        state = .Partial_Int
+                                    }
                                 }
                             }
                         }
@@ -83,9 +109,6 @@ class Calculator {
                         }
                         break
                     
-                    default:
-                        break
-                    
                 }
                 break
             
@@ -94,7 +117,16 @@ class Calculator {
                 switch (state) {
                     
                     case .Start:
-                        error = true
+                        if string != "0" {
+                            if let op = input {
+                                pendingOperator = op
+                                pendingValue = Double(string)
+                                state = .After_Operator
+                            }
+                        }
+                        else {
+                            error = true
+                        }
                         break
                     
                     case .Partial_Int:
@@ -107,6 +139,9 @@ class Calculator {
                             else {
                                 error = true
                             }
+                        }
+                        else {
+                            error = true
                         }
                         break
                     
@@ -121,14 +156,15 @@ class Calculator {
                                 error = true
                             }
                         }
+                        else {
+                            error = true
+                        }
                         break
                     
                     case .After_Operator:
                         error = true
                         break
                     
-                    default:
-                        break
                 }
                 break
             
@@ -137,8 +173,14 @@ class Calculator {
                 switch (state) {
                     
                     case .Start:
-                        string = string + "."
-                        state = .Partial_Double
+                        if (string == "0") {
+                            string = string + "."
+                            state = .Partial_Double
+                        }
+                        else {
+                            string = "0."
+                            state = .Partial_Double
+                        }
                         break
                     
                     case .Partial_Int:
@@ -154,9 +196,6 @@ class Calculator {
                         string = "0."
                         state = .Partial_Double
                     
-                    default:
-                        break
-                    
                 }
                 break
             
@@ -165,6 +204,41 @@ class Calculator {
                 switch (state) {
                     
                     case .Start:
+                        if string != "0" {
+                            if let calculation = lastCalculation {
+                                if let val = Double(string) {
+                                    
+                                    let answer: Double
+                                    if calculation.Operator == "+" {
+                                        answer = val + calculation.value
+                                    }
+                                    else if calculation.Operator == "-" {
+                                        answer = val - calculation.value
+                                    }
+                                    else if calculation.Operator == "x" {
+                                        answer = val * calculation.value
+                                    }
+                                    else if calculation.Operator == "÷" {
+                                        answer = val / calculation.value
+                                    }
+                                    else {
+                                        answer = val
+                                        error = true
+                                    }
+                                    
+                                    if (isInteger(answer)) {
+                                        string = String(Int(floor(answer)))
+                                        state = .Start
+                                    }
+                                    else {
+                                        string = String(answer)
+                                        state = .Start
+                                    }
+                                    
+                                    lastAnswer = answer
+                                }
+                            }
+                        }
                         break
                     
                     case .Partial_Int:
@@ -191,14 +265,17 @@ class Calculator {
                                 
                                 if (isInteger(answer)) {
                                     string = String(Int(floor(answer)))
-                                    state = .Partial_Int
                                 }
                                 else {
                                     string = String(answer)
-                                    state = .Partial_Double
                                 }
+
+                                state = .Start
                                 
                                 lastAnswer = answer
+                                if let op = pendingOperator {
+                                    lastCalculation = (Operator: op, value: val2)
+                                }
                                 pendingOperator = nil
                                 pendingValue = nil
                             }
@@ -234,7 +311,12 @@ class Calculator {
                                     string = String(answer)
                                 }
                                 
+                                state = .Start
+                                
                                 lastAnswer = answer
+                                if let op = pendingOperator {
+                                    lastCalculation = (Operator: op, value: val2)
+                                }
                                 pendingOperator = nil
                                 pendingValue = nil
                             }
@@ -287,10 +369,6 @@ class Calculator {
             
             // MARK: Clear
             case .Clear:
-                if state == .Start {
-                    error = true
-                    break
-                }
                 string = "0"
                 state = .Start
                 pendingValue = nil
@@ -302,6 +380,10 @@ class Calculator {
                 switch state {
         
                     case .Start:
+                        if string != "0" {
+                            string = "0"
+                            break
+                        }
                         error = true
                         break
                     
@@ -334,14 +416,7 @@ class Calculator {
                             state = .Partial_Double
                         }
                         break
-                    
-                    default:
-                        break
                 }
-                break
-            
-            // MARK: Default
-            default:
                 break
         }
         
