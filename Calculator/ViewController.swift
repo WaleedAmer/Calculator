@@ -9,6 +9,8 @@
 import UIKit
 import pop
 
+// UIImage extension to create a UIImage out of a UIColor
+// This is helpful for the UIButton highlights
 public extension UIImage {
     convenience init(color: UIColor, size: CGSize = CGSizeMake(1, 1)) {
         let rect = CGRectMake(0, 0, size.width, size.height)
@@ -26,18 +28,18 @@ class ViewController: UIViewController {
     var backgroundImageView: UIImageView?
     var gradientLayer: CAGradientLayer!
     var calculator: Calculator!
+    var pendingOperator: UIButton? = nil
     
     @IBOutlet weak var AnswerView: UIView!
     @IBOutlet weak var RowsStackView: UIStackView!
     @IBOutlet weak var answerLabel: UILabel!
-    
-    var pendingOperator: UIButton? = nil
     
     override func viewWillAppear(animated: Bool) {
         // Make the background pretty
         gradientLayer = makeGradientLayer((250, 109, 105), rgb2: (241, 41, 124))
         self.view.layer.addSublayer(gradientLayer)
         
+        // These will be animated into visible
         AnswerView.hidden = true
         AnswerView.alpha = 0
         RowsStackView.alpha = 0
@@ -61,21 +63,22 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Make the AnswerView pretty
+        // Make the calculator's display look pretty
         AnswerView.layer.cornerRadius = 4
         AnswerView.layer.shadowColor = UIColor.blackColor().CGColor
         AnswerView.layer.shadowOffset = CGSizeMake(0, 8)
         AnswerView.layer.shadowRadius = 6
         AnswerView.layer.shadowOpacity = 0.25
         
+        // Create the calculator controller and link this ViewController to it
         calculator = Calculator()
         calculator.viewController = self
     }
     
     override func viewDidAppear(animated: Bool) {
+        // Nifty opening animations
         UIView.animateWithDuration(0.5, delay: 0.4, options: [.CurveEaseInOut], animations: { () -> Void in
             self.AnswerView.hidden = false
-            
             self.RowsStackView.alpha = 1
             }, completion: nil)
         
@@ -130,7 +133,6 @@ class ViewController: UIViewController {
                 scaleDown(button)
                 pendingOperator = nil
             }
-            //shakeVertical(AnswerView, duration: 0.1, intensity: 3, count: 1)
         }
     }
     

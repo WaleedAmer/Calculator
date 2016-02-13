@@ -6,7 +6,6 @@
 //  Copyright © 2016 Amer Software. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 enum InputType {
@@ -29,10 +28,14 @@ enum CalculatorState {
 class Calculator {
     var viewController: ViewController? = nil
     var state: CalculatorState = .Start
+    
+    // This is text on the calculator's display
     var string: String = "0" {
         didSet {
             var shook = false
-            while string.characters.count > 10 {
+            
+            // Enforce the character limit 11
+            while string.characters.count > 11 {
                 if !shook {
                     if let vc = viewController {
                         vc.shake(vc.AnswerView, duration: 0.05, intensity: 3, count: 1)
@@ -47,9 +50,11 @@ class Calculator {
     var pendingValue: Double? = nil
     var pendingOperator: Character? = nil
     var lastAnswer: Double? = nil
-    
     var lastCalculation: (Operator: Character, value: Double)? = nil
     
+    // This function is called whenever a button is tapped. InputType specifies which type of button was
+    // pushed and the optional argument input is the value of the button 
+    // (Ex: The specific digit pressed if InputType is Digit
     func handleInput(InputType type: InputType, input: Character? = nil) -> (output: String, error: Bool) {
         // Get initial state so that we can tell if the state changed at the end (For debug purposes)
         let initialState = state
@@ -68,23 +73,15 @@ class Calculator {
                         
                         if let digit = input {
                             if string != "0" {
-                                // Answer is displayed
+                                // The answer is displayed
                                 string = String(digit)
                                 state = .Partial_Int
                                 break
                             }
                             else {
-                                if pendingOperator == nil {
-                                    if digit != "0" {
-                                        string = String(digit)
-                                        state = .Partial_Int
-                                    }
-                                }
-                                else {
-                                    if digit != "0" {
-                                        string = String(digit)
-                                        state = .Partial_Int
-                                    }
+                                if digit != "0" {
+                                    string = String(digit)
+                                    state = .Partial_Int
                                 }
                             }
                         }
@@ -136,9 +133,6 @@ class Calculator {
                                 pendingValue = Double(string)
                                 state = .After_Operator
                             }
-                            else {
-                                error = true
-                            }
                         }
                         else {
                             error = true
@@ -151,9 +145,6 @@ class Calculator {
                                 pendingOperator = op
                                 pendingValue = Double(string)
                                 state = .After_Operator
-                            }
-                            else {
-                                error = true
                             }
                         }
                         else {
@@ -426,6 +417,7 @@ class Calculator {
         
         return (string, error)
     }
+    
     
     func isInteger(number: String) -> Bool {
         if let val: Double = Double(string) {

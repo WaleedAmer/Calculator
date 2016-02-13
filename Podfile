@@ -3,5 +3,4 @@ use_frameworks!
 
 target 'Calculator' do
     pod 'pop', '~> 1.0'
-    pod 'Tweaks', '~> 1.0'
 end
