@@ -21,7 +21,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="14C-OS-tWq" userLabel="Calculator">
                                 <rect key="frame" x="21" y="39" width="372" height="662"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UJI-jh-0xU" userLabel="Display">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UJI-jh-0xU" userLabel="Display">
                                         <rect key="frame" x="0.0" y="0.0" width="372" height="184"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8O-bA-kau">
@@ -39,13 +39,13 @@
                                             <constraint firstAttribute="bottom" secondItem="c8O-bA-kau" secondAttribute="bottom" constant="-1" id="owi-lT-0tf"/>
                                         </constraints>
                                     </view>
-                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="fillEqually" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="hSk-Vi-HzM" userLabel="Buttons">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="hSk-Vi-HzM" userLabel="Buttons">
                                         <rect key="frame" x="0.0" y="216" width="372" height="446"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Rkv-tm-265" userLabel="Row1">
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Rkv-tm-265" userLabel="Row1">
                                                 <rect key="frame" x="0.0" y="0.0" width="372" height="70"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fkG-Dh-Q7V">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fkG-Dh-Q7V">
                                                         <rect key="frame" x="0.0" y="0.0" width="86" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="AC">
@@ -55,7 +55,7 @@
                                                             <action selector="clearWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="N70-Xc-zOd"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrL-gD-vb1">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrL-gD-vb1">
                                                         <rect key="frame" x="96" y="0.0" width="85" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="ANS">
@@ -65,7 +65,7 @@
                                                             <action selector="answerWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bYo-KH-HKh"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cGq-sF-H7J">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cGq-sF-H7J">
                                                         <rect key="frame" x="191" y="0.0" width="86" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="DEL">
@@ -75,7 +75,7 @@
                                                             <action selector="deleteWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VsW-23-NAj"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iqj-md-51x">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iqj-md-51x">
                                                         <rect key="frame" x="287" y="0.0" width="85" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                                         <state key="normal" title="÷">
@@ -87,10 +87,10 @@
                                                     </button>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="LUf-Un-RSW" userLabel="Row2">
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="LUf-Un-RSW" userLabel="Row2">
                                                 <rect key="frame" x="0.0" y="94" width="372" height="70"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="koT-tz-jgp">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="koT-tz-jgp">
                                                         <rect key="frame" x="0.0" y="0.0" width="86" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="7">
@@ -100,7 +100,7 @@
                                                             <action selector="digitWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3aX-gF-bIq"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k3r-z7-scP">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k3r-z7-scP">
                                                         <rect key="frame" x="96" y="0.0" width="85" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="8">
@@ -110,7 +110,7 @@
                                                             <action selector="digitWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rrr-az-BXW"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sfo-ae-9qz">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sfo-ae-9qz">
                                                         <rect key="frame" x="191" y="0.0" width="86" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="9">
@@ -120,7 +120,7 @@
                                                             <action selector="digitWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WgL-ql-TIL"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eex-jF-YY2">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eex-jF-YY2">
                                                         <rect key="frame" x="287" y="0.0" width="85" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="x">
@@ -132,10 +132,10 @@
                                                     </button>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FCh-uc-Qjs" userLabel="Row3">
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FCh-uc-Qjs" userLabel="Row3">
                                                 <rect key="frame" x="0.0" y="188" width="372" height="70"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nsw-N7-hlC">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nsw-N7-hlC">
                                                         <rect key="frame" x="0.0" y="0.0" width="86" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="4">
@@ -145,7 +145,7 @@
                                                             <action selector="digitWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Y7o-nJ-wEC"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="geV-IH-QSE">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="geV-IH-QSE">
                                                         <rect key="frame" x="96" y="0.0" width="85" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="5">
@@ -155,7 +155,7 @@
                                                             <action selector="digitWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ifW-qc-1oY"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hap-WN-mRY">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hap-WN-mRY">
                                                         <rect key="frame" x="191" y="0.0" width="86" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="6">
@@ -165,7 +165,7 @@
                                                             <action selector="digitWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2TK-zH-aiJ"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQA-C0-ZmJ">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQA-C0-ZmJ">
                                                         <rect key="frame" x="287" y="0.0" width="85" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="-">
@@ -185,10 +185,10 @@
                                                     </mask>
                                                 </variation>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1Ho-kE-8w6" userLabel="Row4">
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1Ho-kE-8w6" userLabel="Row4">
                                                 <rect key="frame" x="0.0" y="282" width="372" height="70"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xO5-Bp-PBj">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xO5-Bp-PBj">
                                                         <rect key="frame" x="0.0" y="0.0" width="86" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="1">
@@ -198,7 +198,7 @@
                                                             <action selector="digitWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ETq-2D-AXB"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NsW-Xe-QWs">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NsW-Xe-QWs">
                                                         <rect key="frame" x="96" y="0.0" width="85" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="2">
@@ -208,7 +208,7 @@
                                                             <action selector="digitWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qTe-R4-i6Q"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ieb-pq-yr2">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ieb-pq-yr2">
                                                         <rect key="frame" x="191" y="0.0" width="86" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="3">
@@ -218,7 +218,7 @@
                                                             <action selector="digitWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="51M-cm-acX"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jzL-bV-Mak">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jzL-bV-Mak">
                                                         <rect key="frame" x="287" y="0.0" width="85" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="+">
@@ -238,14 +238,14 @@
                                                     </mask>
                                                 </variation>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zA4-cS-zuE" userLabel="Row5">
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zA4-cS-zuE" userLabel="Row5">
                                                 <rect key="frame" x="0.0" y="376" width="372" height="70"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WEp-Gg-ULD">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WEp-Gg-ULD">
                                                         <rect key="frame" x="0.0" y="0.0" width="86" height="70"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     </view>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TKt-UK-r7e">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TKt-UK-r7e">
                                                         <rect key="frame" x="96" y="0.0" width="85" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="0">
@@ -255,7 +255,7 @@
                                                             <action selector="digitWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2At-Qy-T0C"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="972-na-iAn">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="972-na-iAn">
                                                         <rect key="frame" x="191" y="0.0" width="86" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title=".">
@@ -265,7 +265,7 @@
                                                             <action selector="pointWasTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yRC-Gh-mjw"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fPc-Rg-5iI">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fPc-Rg-5iI">
                                                         <rect key="frame" x="287" y="0.0" width="85" height="70"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                         <state key="normal" title="=">

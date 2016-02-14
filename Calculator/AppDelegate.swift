@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Tweaks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
